@@ -1,5 +1,5 @@
 Summary:	X.org input driver for HyperPen devices
-Summary(pl.UTF-8):   Sterownik wejściowy X.org dla urządzeń HyperPen
+Summary(pl.UTF-8):	Sterownik wejściowy X.org dla urządzeń HyperPen
 Name:		xorg-driver-input-hyperpen
 Version:	1.1.0
 Release:	0.1
