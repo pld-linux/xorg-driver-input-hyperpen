@@ -1,12 +1,12 @@
 Summary:	X.org input driver for HyperPen devices
 Summary(pl.UTF-8):	Sterownik wejściowy X.org dla urządzeń HyperPen
 Name:		xorg-driver-input-hyperpen
-Version:	1.2.0
-Release:	3
+Version:	1.3.0
+Release:	1
 License:	MIT
 Group:		X11/Applications
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-input-hyperpen-%{version}.tar.bz2
-# Source0-md5:	175c1e1ad668ebbbe212c1e975dd14f9
+# Source0-md5:	c50d0da3206d18d9d94f720e3688eca5
 URL:		http://xorg.freedesktop.org/
 BuildRequires:	autoconf >= 2.57
 BuildRequires:	automake
