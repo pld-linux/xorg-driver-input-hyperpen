@@ -1,8 +1,9 @@
-Summary:	X.org input driver for HyperPen devices
-Summary(pl.UTF-8):	Sterownik wejściowy X.org dla urządzeń HyperPen
+# NOTE: doesn't build with current xserver
+Summary:	X.org input driver for Aiptek HyperPen devices
+Summary(pl.UTF-8):	Sterownik wejściowy X.org dla urządzeń Aiptek HyperPen
 Name:		xorg-driver-input-hyperpen
 Version:	1.3.0
-Release:	2
+Release:	2.1
 License:	MIT
 Group:		X11/Applications
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-input-hyperpen-%{version}.tar.bz2
@@ -17,15 +18,17 @@ BuildRequires:	xorg-proto-randrproto-devel
 BuildRequires:	xorg-util-util-macros >= 0.99.2
 BuildRequires:	xorg-xserver-server-devel >= 1.0.99.901
 BuildRequires:  rpmbuild(macros) >= 1.389
-%requires_xorg_xserver_xinput
+%{?requires_xorg_xserver_xinput}
 Requires:	xorg-xserver-server >= 1.0.99.901
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-X.org input driver for HyperPen devices.
+X.org input driver for Aiptek HyperPen devices. It supports Aiptek
+HyperPen 6000.
 
 %description -l pl.UTF-8
-Sterownik wejściowy X.org dla urządzeń HyperPen.
+Sterownik wejściowy X.org dla urządzeń Aiptek HyperPen. Obsługuje
+Aiptek HyperPen 6000.
 
 %prep
 %setup -q -n xf86-input-hyperpen-%{version}
@@ -36,8 +39,7 @@ Sterownik wejściowy X.org dla urządzeń HyperPen.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure \
-	--disable-static
+%configure
 
 %{__make}
 
@@ -54,6 +56,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc COPYING ChangeLog
+%doc COPYING ChangeLog README
 %attr(755,root,root) %{_libdir}/xorg/modules/input/hyperpen_drv.so
 #%{_mandir}/man4/hyperpen.4*
