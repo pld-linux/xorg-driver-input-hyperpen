@@ -1,0 +1,11 @@
+--- xf86-input-hyperpen-1.4.1/configure.ac~	2011-07-05 03:42:36.000000000 +0200
++++ xf86-input-hyperpen-1.4.1/configure.ac	2013-04-07 21:36:17.091429090 +0200
+@@ -35,7 +35,7 @@
+ DRIVER_NAME=hyperpen
+ AC_SUBST([DRIVER_NAME])
+ 
+-AM_CONFIG_HEADER([config.h])
++AC_CONFIG_HEADERS([config.h])
+ 
+ # Checks for programs.
+ AC_DISABLE_STATIC
