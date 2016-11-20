@@ -2,7 +2,7 @@ Summary:	X.org input driver for Aiptek HyperPen devices
 Summary(pl.UTF-8):	Sterownik wejściowy X.org dla urządzeń Aiptek HyperPen
 Name:		xorg-driver-input-hyperpen
 Version:	1.4.1
-Release:	10
+Release:	11
 License:	MIT
 Group:		X11/Applications
 Source0:	http://xorg.freedesktop.org/releases/individual/driver/xf86-input-hyperpen-%{version}.tar.bz2
