@@ -32,7 +32,7 @@ Aiptek HyperPen 6000.
 
 %prep
 %setup -q -n xf86-input-hyperpen-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 %{__libtoolize}
