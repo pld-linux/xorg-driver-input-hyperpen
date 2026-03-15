@@ -1,0 +1,101 @@
+--- a/src/xf86HyperPen.c	2026-03-15 11:44:48.405254400 +0100
++++ b/src/xf86HyperPen.c	2026-03-15 12:00:56.796564893 +0100
+@@ -66,7 +66,7 @@
+  * read a full packet before returning
+  */
+ 
+-static char *default_options[] = {
++static const char *default_options[] = {
+     "BaudRate",    "9600",
+     "DataBits",    "8",
+     "StopBits",    "1",
+@@ -113,7 +113,7 @@
+ int stylus;
+ 
+ typedef struct {
+-    char *hypDevice;          /* device file name */
++    const char *hypDevice;          /* device file name */
+     int hypButTrans;          /* button translation flags */
+     int hypOldX;              /* previous X position */
+     int hypOldY;              /* previous Y position */
+@@ -212,7 +212,7 @@
+     SYSCALL(len = read(pInfo->fd, buffer, sizeof(buffer)));
+ 
+     if (len <= 0) {
+-        Error("error reading HyperPen device");
++        xf86Msg(X_ERROR, "error reading HyperPen device: %s\n", strerror(errno));
+         return;
+     }
+ 
+@@ -372,14 +372,14 @@
+ 
+     SYSCALL(err = write(fd, data, strlen(data)));
+     if (err == -1) {
+-        Error("HyperPen write");
++        xf86Msg(X_ERROR, "HyperPen write: %s\n", strerror(errno));
+         return NULL;
+     }
+ 
+     while (numread < len) {
+         err = xf86WaitForInput(fd, 100000);
+         if (err == -1) {
+-            Error("HyperPen select");
++            xf86Msg(X_ERROR, "HyperPen select: %s\n", strerror(errno));
+             return NULL;
+         }
+         if (!err) {
+@@ -389,7 +389,7 @@
+ 
+         SYSCALL(err = read(fd, buffer + numread++, 1));
+         if (err == -1) {
+-            Error("HyperPen read");
++            xf86Msg(X_ERROR, "HyperPen read: %s\n", strerror(errno));
+             return NULL;
+         }
+         if (!err) {
+@@ -431,7 +431,7 @@
+ 
+     pInfo->fd = xf86OpenSerial(pInfo->options);
+     if (pInfo->fd == -1) {
+-        Error(priv->hypDevice);
++        xf86Msg(X_ERROR, "%s: %s\n", priv->hypDevice, strerror(errno));
+         return !Success;
+     }
+     DBG(2, ErrorF("%s opened as fd %d\n", priv->hypDevice, pInfo->fd));
+@@ -443,13 +443,16 @@
+ 
+     /* Send reset to the tablet */
+ 
+-    write(pInfo->fd, SS_RESET, strlen(SS_RESET));
++    SYSCALL(err = write(pInfo->fd, SS_RESET, strlen(SS_RESET)));
++    if (err == -1) {
++        xf86Msg(X_ERROR, "HyperPen write: %s\n", strerror(errno));
++    }
+     WAIT(1000);
+ 
+     /* Put it in prompt mode so it doesn't say anything before we're ready */
+     SYSCALL(err = write(pInfo->fd, SS_PROMPT_MODE, strlen(SS_PROMPT_MODE)));
+     if (err == -1) {
+-        Error("HyperPen write");
++        xf86Msg(X_ERROR, "HyperPen write: %s\n", strerror(errno));
+         return !Success;
+     }
+     /* Clear any pending input */
+@@ -578,7 +581,7 @@
+     SYSCALL(err = write(pInfo->fd, buffer, idx));
+ 
+     if (err == -1) {
+-        Error("HyperPen write");
++        xf86Msg(X_ERROR, "HyperPen write: %s\n", strerror(errno));
+         return !Success;
+     }
+ 
+@@ -819,7 +822,7 @@
+             int                 flags)
+ {
+     HyperPenDevicePtr priv = malloc(sizeof(HyperPenDeviceRec));
+-    char *s;
++    const char *s;
+     int rc = Success;
+ 
+     if (!priv) {
